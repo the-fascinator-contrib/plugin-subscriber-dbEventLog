@@ -17,7 +17,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.googlecode.fascinator.subscriber.solrEventLog;
+package com.googlecode.fascinator.subscriber.eventLog;
 
 import com.googlecode.fascinator.common.access.GenericSchema;
 

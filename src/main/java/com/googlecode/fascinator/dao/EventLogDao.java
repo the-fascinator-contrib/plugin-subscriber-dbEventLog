@@ -1,6 +1,3 @@
-<div>
-    <p>This Subscriber plugin records all tool chain events and logs them in a solr index and database for statistics and audit purposes.</p>
-    <pre>
 /* 
  * Copyright (C) 2013 Queensland Cyber Infrastructure Foundation (http://www.qcif.edu.au/)
  * 
@@ -18,6 +15,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-    </pre>
-</div>
+package com.googlecode.fascinator.dao;
 
+import com.googlecode.fascinator.model.EventLog;
+
+/**
+ * @author mulhollm
+ *
+ */
+public interface EventLogDao extends GenericDao<EventLog, Long>{
+
+}
