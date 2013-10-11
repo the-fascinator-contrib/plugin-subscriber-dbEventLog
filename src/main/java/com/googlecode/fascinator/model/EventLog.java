@@ -55,36 +55,36 @@ public class EventLog implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="SEQUENCE_GEN")
 	private Long eventLogId;
 	
-	@Field
+	@Field("id")
 	@Column(name = "DOCUMENT_ID", nullable = false, unique = true)
 	private String documentId;
 	
-	@Field
+	@Field("eventType")
 	@Column(name = "EVENT_TYPE")
 	private String eventType;
 	
-	@Field
+	@Field("oid")
 	@Column(name = "OID")
 	private String oid;
 	
-	@Field
+	@Field("eventTime")
 	@Column(name = "EVENT_TIME", columnDefinition = "date")
 	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
 	private DateTime eventTime;
 	
-	@Field
+	@Field("user")
 	@Column(name = "USER_NAME")
 	private String userName;
 	
-	@Field
+	@Field("context")
 	@Column(name = "CONTEXT")
 	private String context;
 	
-	@Field
+	@Field("text")
 	@Column(name = "TEXT_DETAILS")
 	private String textDetails;
 	
-	@Field
+	@Field("*")
 	@Column(name = "EXTRA")
 	private String extra;
 
