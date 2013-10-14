@@ -23,8 +23,10 @@ package com.googlecode.fascinator.service;
 
 import java.util.Map;
 
+import com.googlecode.fascinator.model.EventLog;
+
 
 public interface EventLogService {
 	
-	public void persist(Map<String, String> param);
+	public EventLog persist(Map<String, String> param);
 }

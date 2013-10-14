@@ -23,8 +23,8 @@
 package com.googlecode.fascinator.model;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +39,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
+import com.googlecode.fascinator.common.JsonObject;
 
 @Entity
 @Table(name = "EventLog")
@@ -165,26 +167,41 @@ public class EventLog implements Serializable {
 	public static EventLog getInstance(Map<String, String> param) {
 		return new Builder(param).build();
 	}
-		
+	
 	private static class Builder {
 		private final Map<String, String> param;
-		private final DateTime dateTime;
 		
 		public Builder(Map<String, String> param) {
-			this.param = Collections.unmodifiableMap(param);
-			this.dateTime = DateTime.parse(param.get("eventTime"));
+			this.param = new ConcurrentHashMap<String, String>(param);
+		}
+		
+		private String remove(String key) {
+			String value = this.param.remove(key);
+			return value;
+		}
+		
+		private DateTime removeDate() {
+			String formattedDate = this.param.remove("eventTime");
+			DateTime dateTime = DateTime.parse(formattedDate);
+			return dateTime;
+		}
+		
+		private String getExtra() {
+			// any values remaining in dto will be added to extra field.
+			String value = JsonObject.toJSONString(this.param);
+			return value;
 		}
 		
 		private EventLog build() {	
 			EventLog eventLog = new EventLog();
-			eventLog.setDocumentId(param.get("id"));
-			eventLog.setOid(param.get("oid"));
-			eventLog.setContext(param.get("context"));
-			eventLog.setEventTime(this.dateTime);
-			eventLog.setUserName(param.get("user"));
-			eventLog.setTextDetails(param.get("text"));
-			eventLog.setEventType(param.get("eventType"));
-			
+			eventLog.setDocumentId(remove("id"));
+			eventLog.setOid(remove("oid"));
+			eventLog.setEventType(remove("eventType"));
+			eventLog.setContext(remove("context"));
+			eventLog.setUserName(remove("user"));
+			eventLog.setEventTime(removeDate());
+			eventLog.setTextDetails(remove("text"));
+			eventLog.setExtra(getExtra());
 			return eventLog;
 		}
 	}

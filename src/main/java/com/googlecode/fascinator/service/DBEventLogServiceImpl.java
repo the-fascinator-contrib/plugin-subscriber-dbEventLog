@@ -43,11 +43,12 @@ public class DBEventLogServiceImpl implements EventLogService {
 	/* (non-Javadoc)
 	 * @see com.googlecode.fascinator.service.EventLogService#persist(java.util.Map)
 	 */
-	public void persist(Map<String, String> param) {
+	public EventLog persist(Map<String, String> param) {
 		EventLog eventLog = EventLog.getInstance(param);
 
 		Long eventLogPK = this.eventLogDao.create(eventLog);
 		LOG.debug("event log peristed with id: " + eventLogPK);
+		return eventLog;
 	}
 
 }
